@@ -29,8 +29,7 @@ SECRET_KEY = 'django-insecure-lvbc00v86y_fv@wv_c3a^-=7mza!2*ypity23vv%7su69%%-m=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '77.221.136.139']
-
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '138.124.124.71']
 
 # Application definition
 
@@ -40,11 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'allauth',
-    # 'allauth.account',
     'rest_framework',
     'easy_thumbnails',
-    # 'rest_framework.authtoken',
     'django.contrib.admin',
     'core',
     'api',
@@ -58,8 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'admin_reorder.middleware.ModelAdminReorder',
-    # "allauth.account.middleware.AccountMiddleware",
 ]
 
 REST_FRAMEWORK = {
@@ -94,10 +88,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by email
-    # 'allauth.account.auth_backends.AuthenticationBackend',
-
     'rest_framework.authentication.TokenAuthentication',
 ]
 LOGIN_REDIRECT_URL = '/'
@@ -118,8 +108,6 @@ DATABASES = {
         'USER': env('POSTGRES_USER'),
         'PASSWORD': env('POSTGRES_PASSWORD'),
         'HOST': env('POSTGRES_HOST'),
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -144,37 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# ADMIN_REORDER = [
-#     {
-#         'app': 'core',
-#         'label': 'Основные данные',
-#         'models': ['Category', 'ServiceItem',]
-#     },
-#     # {
-#     #     'app': 'core',
-#     #     'label': 'Общие настройки',
-#     #     'models': ['WorkCity',]
-#     # },
-#     {
-#         'app': 'core',
-#         'label': 'Информация',
-#         'models': ('core.GlobalSetting', 'core.IconAbout', 'FaqCategory', 'FaqQuestion',)
-#     },
-#     {
-#         'app': 'core',
-#         'label': 'Новости',
-#         'models': ('core.Article',)
-#     },
-# ]
-
-# SUIT_CONFIG = {
-#     'ADMIN_NAME': 'Django Suit',
-#     'MENU': (
-#         'core',
-#         {'app': 'auth', 'label': 'Authorization', 'icon':'icon-lock'},
-#         {'label': 'erferfref', 'icon':'icon-cog', 'models': ('auth.user', 'core.Article')},
-#     )
-# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
