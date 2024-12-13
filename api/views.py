@@ -65,12 +65,15 @@ class InvestigationViewSet(ModelViewSet):
         if investigation.lmodel.code == 'wildfire-satellite-roboflow-yolov8n':
             yolo_model = YOLO(investigation.lmodel.model_file.path)
             image_path = investigation.photo.path
-            image = cv2.imread(image_path)
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            results = yolo_model(image)
-            fire_count = len(list(results[0].boxes.data))
-            detail_data = str(results[0].boxes.data)
-            message = f'Найдено объектов: {fire_count}\n{detail_data}'
+            results = yolo_model.predict(source=image_path)
+            for result in results:
+                boxes = result.boxes
+                message = f"Найдено объектов: {len(boxes)}\n"
+                for box in boxes:
+                    predicted_class_index = int(box.cls)
+                    predicted_class_name = result.names[predicted_class_index]
+                    conf = 100 *  box.conf.item()
+                    message += f"Класс: {predicted_class_name}, Достоверность: {conf:.2f}%"
         elif investigation.lmodel.code == 'forest-fire-KaterinaKuhne-yolov8n-cls':
             yolo_model = YOLO(investigation.lmodel.model_file.path)
             image_path = investigation.photo.path
@@ -81,7 +84,7 @@ class InvestigationViewSet(ModelViewSet):
             probs = results[0].probs
             predicted_class_index = results[0].probs.top1
             predicted_class_name = results[0].names[predicted_class_index]
-            predicted_confidence = probs.top1conf.item()
+            predicted_confidence = 100 * probs.top1conf.item()
             message = f"Класс: {predicted_class_name} Вероятность: {predicted_confidence:.2f}"
         elif investigation.lmodel.code == 'Katrin-Pochtar-Wildfire-keras':
             img_size=(32, 32)

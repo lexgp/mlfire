@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-lvbc00v86y_fv@wv_c3a^-=7mza!2*ypity23vv%7su69%%-m=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '138.124.124.71']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1', '138.124.124.71', 'satellifire.aeza.network']
 
 # Application definition
 
