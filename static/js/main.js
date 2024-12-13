@@ -9,7 +9,8 @@ const app = createApp({
         lmodel: null
       },
       learnigModels: null,
-      isProcessing: false
+      isProcessing: false,
+      resultData: null
     }
   },
   methods: {
@@ -45,7 +46,8 @@ const app = createApp({
           .then((response) => {
             console.log('SUCCESS!!', response)
             this.isProcessing = false
-            alert(response.data)
+            // alert(response.data)
+            this.resultData = response.data
             // this.$emit('update:id', response.data.id)
             // this.$emit('update:url', response.data.preview)
           })

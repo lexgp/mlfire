@@ -20,7 +20,7 @@ class InvestigationSerializer(serializers.ModelSerializer):
     # owner_id = serializers.CharField(required=False, allow_null=True, source='owner.id')
     class Meta:
         model = Investigation
-        fields = ('id', 'photo', 'preview', 'lmodel')
+        fields = ('id', 'photo', 'preview', 'lmodel', 'result')
 
     def create(self, validated_data):
         return super().create(validated_data)

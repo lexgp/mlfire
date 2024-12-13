@@ -96,7 +96,8 @@ class InvestigationViewSet(ModelViewSet):
         investigation.result = message
         investigation.save()
         
-        return Response(message, status=HTTP_201_CREATED)
+        serializer = api_serializers.InvestigationSerializer(investigation)
+        return Response(serializer.data, status=HTTP_201_CREATED)
 
 
 class LearnigModelViewSet(ModelViewSet):

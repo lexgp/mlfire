@@ -42,6 +42,13 @@
       <button type="submit">Отправить</button>
     </div>
 
+    <br><br>
+    <div v-if="resultData">
+      <h3 v-text="resultData.result"></h3>
+      <img :src="resultData.preview">
+    </div>
+    <br><br>
+
   </form>
 </div>
 
