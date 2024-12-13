@@ -1,25 +1,5 @@
-import json
-from django.shortcuts import render
-from django.views.generic import TemplateView
-from rest_framework.viewsets import ModelViewSet, ViewSet
-# from core.models import FaqQuestion
-# from core.models import ServiceItem
-# from core.models import ServicePhoto
-# from core.models import Category
-from django.db.models import Q
-
-from core.paginators import StandardResultsSetPagination
+from rest_framework.viewsets import ModelViewSet
 from api import serializers as api_serializers
-from core import serializers as core_serializers
-
-from rest_framework.generics import GenericAPIView, ListAPIView
-from rest_framework.permissions import AllowAny
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
-
-from rest_framework.decorators import api_view, renderer_classes
-from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 from core.models import LearnigModel
 from core.models import Investigation
@@ -34,14 +14,13 @@ from rest_framework.response import Response
 from PIL import Image, ImageEnhance
 
 
-from ultralytics import YOLO
 import cv2
+from ultralytics import YOLO
 import matplotlib.pyplot as plt
 
 import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
-import cv2
 
 class InvestigationViewSet(ModelViewSet):
     serializer_class = api_serializers.InvestigationSerializer
