@@ -53,6 +53,15 @@ class InvestigationViewSet(ModelViewSet):
                     predicted_class_name = result.names[predicted_class_index]
                     conf = 100 *  box.conf.item()
                     message += f"Класс: {predicted_class_name}, Достоверность: {conf:.2f}%"
+        elif investigation.lmodel.code == 'semushina-yolov8n':
+            yolo_model = YOLO(investigation.lmodel.model_file.path)
+            image_path = investigation.photo.path
+            results = yolo_model.predict(source=image_path)
+            probs = results[0].probs
+            predicted_class_index = results[0].probs.top1
+            predicted_class_name = results[0].names[predicted_class_index]
+            predicted_confidence = 100 * probs.top1conf.item()
+            message = f"Класс: {predicted_class_name} Вероятность: {predicted_confidence:.2f}"
         elif investigation.lmodel.code == 'forest-fire-KaterinaKuhne-yolov8n-cls':
             yolo_model = YOLO(investigation.lmodel.model_file.path)
             image_path = investigation.photo.path
