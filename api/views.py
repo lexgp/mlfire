@@ -100,8 +100,8 @@ class InvestigationViewSet(ModelViewSet):
             with torch.no_grad():
                 outputs = torch_model(input_batch)
                 probs = torch.softmax(outputs, dim=1)
-                p_fire = probs[0, 0].item()
-                message = f'Fire probability: {p_fire:.4f}'
+                p_fire = 100 * probs[0, 0].item()
+                message = f'Fire probability: {p_fire:.2f}%'
         investigation.result = message
         investigation.save()
         
