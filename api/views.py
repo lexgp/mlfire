@@ -13,6 +13,8 @@ from rest_framework.status import (
 from rest_framework.response import Response
 from PIL import Image, ImageEnhance
 
+import torch
+from torchvision import transforms
 
 import cv2
 from ultralytics import YOLO
@@ -81,6 +83,25 @@ class InvestigationViewSet(ModelViewSet):
             predictions = keras_model.predict(test_image)
             probability = predictions[0][0] * 100  # Convert to percentage
             message = f"The probability of fire is {probability:.2f}%"
+        elif investigation.lmodel.code == 'AndreyKotelnikov-resnet18_finetuned':
+            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            torch_model = torch.load('./resnet18_finetuned.pt', map_location=device, weights_only=False)
+            torch_model.eval()  # Переводим в режим оценки
+            transform = transforms.Compose([
+                transforms.Resize((224, 224)),
+                transforms.ToTensor(),
+                transforms.Normalize([0.485, 0.456, 0.406],
+                                    [0.229, 0.224, 0.225])
+            ])
+            image_path = investigation.photo.path
+            img = Image.open(image_path).convert('RGB')
+            input_tensor = transform(img)
+            input_batch = input_tensor.unsqueeze(0).to(device)
+            with torch.no_grad():
+                outputs = torch_model(input_batch)
+                probs = torch.softmax(outputs, dim=1)
+                p_fire = probs[0, 0].item()
+                message = f'Fire probability: {p_fire:.4f}'
         investigation.result = message
         investigation.save()
         
