@@ -85,7 +85,7 @@ class InvestigationViewSet(ModelViewSet):
             message = f"The probability of fire is {probability:.2f}%"
         elif investigation.lmodel.code == 'AndreyKotelnikov-resnet18_finetuned':
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            torch_model = torch.load('./resnet18_finetuned.pt', map_location=device, weights_only=False)
+            torch_model = torch.load(investigation.lmodel.model_file.path, map_location=device, weights_only=False)
             torch_model.eval()  # Переводим в режим оценки
             transform = transforms.Compose([
                 transforms.Resize((224, 224)),
