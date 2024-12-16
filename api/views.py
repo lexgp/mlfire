@@ -67,10 +67,11 @@ class InvestigationViewSet(ModelViewSet):
         elif investigation.lmodel.code == 'forest-fire-KaterinaKuhne-yolov8n-cls':
             yolo_model = YOLO(investigation.lmodel.model_file.path)
             image_path = investigation.photo.path
-            grayscale = Image.open(image_path).convert('L')
-            enhancer = ImageEnhance.Contrast(grayscale)
-            preprocessed_image = enhancer.enhance(1.4).point(lambda x: x * 0.6)
-            results = yolo_model(preprocessed_image)
+            results = yolo_model.predict(source=image_path)
+            # grayscale = Image.open(image_path).convert('L')
+            # enhancer = ImageEnhance.Contrast(grayscale)
+            # preprocessed_image = enhancer.enhance(1.4).point(lambda x: x * 0.6)
+            # results = yolo_model(preprocessed_image)
             probs = results[0].probs
             predicted_class_index = results[0].probs.top1
             predicted_class_name = results[0].names[predicted_class_index]
